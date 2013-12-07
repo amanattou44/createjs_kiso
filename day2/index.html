@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>piyo</title>
+  <link href="./index.css" rel="stylesheet" type="text/css" media="all">
+  <script src="../lib/easeljs-0.7.0.min.js"></script>
+  <script src="../lib/tweenjs-0.5.0.min.js"></script>
+  <script src="../lib/movieclip-0.7.0.min.js"></script>
+  <script src="./Piyo.js"></script>
+  <script src="../lib/stats.min.js"></script>
+</head>
+<body onload="init();">
+  <canvas id="canvas" width="600px" height="200px"></canvas>
+  <script>
+    var stage, piyo, stats;
+
+    function init() {
+      stats = new Stats;
+      stats.setMode(0);
+      stats.domElement.style.position = "fixed";
+      stats.domElement.style.right = "0px";
+      stats.domElement.style.top = "0px";
+      document.body.appendChild(stats.domElement);
+
+      canvas = document.getElementById("canvas");
+
+      stage = new createjs.Stage(canvas);
+
+      var sky = new createjs.Shape();
+      stage.addChild(sky);
+      sky.graphics.beginLinearGradientFill(["#0069A0", "#00AAE4"], [0, 1], 0, 0, 0, 150);
+      sky.graphics.drawRect(0, 0, 600, 150);
+
+      var ground = new createjs.Shape();
+      stage.addChild(ground);
+      ground.graphics.beginLinearGradientFill(["#99CC33", "#7EB133"], [0, 1], 0, 150, 0, 200);
+      ground.graphics.drawRect(0, 150, 600, 50);
+
+      piyo = new lib.Piyo();
+      stage.addChild(piyo);
+      piyo.x = canvas.width/2;
+      piyo.y = 170;
+
+      stage.update();
+
+      createjs.Ticker.setFPS(30);
+      createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
+      createjs.Ticker.addEventListener("tick", tick);
+    };
+
+    function tick() {
+      stage.update();
+      stats.update();
+    };
+  </script>
+</body>
+</html>
