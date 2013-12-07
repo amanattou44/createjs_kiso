@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>star</title>
+  <link rel="stylesheet" type="text/css" href="index.css" media="all">
+  <script src="../lib/easel-0.7.0.min.js"></script>
+  <script src="../lib/stats.min.js"></script>
+</head>
+<body onload="init();">
+  <canvas id="canvas"></canvas>
+  <script>
+    var shape, stage, stats;
+
+    function init() {
+      // FPSなどのステータス表示
+      stats = new Stats;
+      stats.setMode(0);
+      stats.domElement.style.position = "fixed";
+      stats.domElement.style.right = "0px";
+      stats.domElement.style.top = "0px";
+      document.body.appendChild(stats.domElement);
+
+      var canvas = document.getElementById("canvas");
+      stage = new createjs.Stage(canvas);
+
+      shape = new createjs.Shape;
+      stage.addChild(shape);
+      shape.x = canvas.width / 2;
+      shape.y = canvas.height / 2;
+      shape.graphics.beginFill("#FFFFFF");
+      shape.graphics.drawPolyStar(0, 0, 40, 6, 0.8, -90);
+
+      stage.update();
+      createjs.Ticker.setFPS(60);
+      createjs.Ticker.addEventListener("tick", tick);
+    };
+
+    function tick() {
+      shape.rotation += 200;
+      stage.update();
+      stats.update();
+    };
+  </script>
+</body>
+</html>
